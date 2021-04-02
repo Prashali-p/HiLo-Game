@@ -1,0 +1,65 @@
+package com.example.mygame;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+private EditText txt;
+private Button btn;
+private TextView out;
+int number;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        txt = findViewById(R.id.Number_text);
+        btn = findViewById(R.id.Guess_button);
+        out = findViewById(R.id.output_text);
+        NewGame();
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckGuess();
+            }
+        });
+        
+    }
+        public void CheckGuess() {
+         String guesstxt = txt.getText().toString();
+         String message ="";
+         try {
+             int guess = Integer.parseInt(guesstxt);
+             if (guess<number)
+                 message = guess +"Guess is low";
+             else if (guess>number)
+                 message = guess+"Guess is high";
+             else
+                 message = guess+"the number is + guess";
+             out.setText(message);
+
+
+         } catch (NumberFormatException e) {
+             e.printStackTrace();
+             message = "Enter no between 1-100:";
+         } finally {
+             out.setText(message);
+
+         }
+
+
+        }
+        public void NewGame(){
+        number = (int)(Math.random()*100+1);
+
+        }
+
+
+
+}
